@@ -1,80 +1,84 @@
-# SONIQ — Statistical Analysis of Music Popularity and Audio Characteristics
+# VARSA — Statistical Analysis of Indian Monsoon Rainfall Variability
 
-Research/feasibility phase for a Probability & Statistics course project (CSE
-undergraduate, 3-week cycle: Review 1 → Review 2 → Review 3).
+**VARSA** ("rain" in Hindi/Sanskrit) — research/feasibility phase for a
+Probability & Statistics course project (CSE undergraduate,
+3-week cycle: Review 1 → Review 2 → Review 3).
 
-**Research question:** *Can statistical analysis of music audio characteristics
-reveal significant relationships with track popularity?*
+**Central question:** *How variable is Indian monsoon rainfall across regions
+and time, are the observed regional differences and long-run trends
+statistically significant, and what is the probability of an extreme rainfall
+deficit in each region?*
 
-The measured answer is nuanced: **statistically yes, practically barely** —
-which is exactly the interesting part.
+**Dataset:** India Meteorological Department (IMD), via the Open Government
+Data platform — area-weighted monthly, seasonal and annual rainfall (mm) for 36
+meteorological subdivisions, 1901–2015. One CSV, no credentials, 428 KB.
 
 ## Status: research phase only
 
 No application has been built yet (deliberately). This directory contains the
-verified data, the audit, the statistical feasibility evidence and the plan.
-
-## Direction reassessment (2026-10-15)
-
-The Spotify direction was reassessed against five India-focused alternatives at
-the user's request. **Recommended direction: Indian monsoon/rainfall analysis**
-(proposed name **VARSA**), with the Spotify work kept as a fallback — nothing
-Spotify was deleted or modified.
+verified dataset, the audit, the statistical feasibility evidence and the
+three-week plan.
 
 | file | what it is |
 |---|---|
-| `research/project_direction_comparison.md` | the reassessment report (dataset table, feasibility per candidate, scored rubric, 3-week plan, final answers) |
-| `research/india_dataset_audit.md` | measured schema/quality + statistics for all six Indian datasets |
-| `research/india_figures.py` → `research/figures_india/` | seven real Review-1 figures for the monsoon direction |
-| `scripts/india_audit.py`, `scripts/india_stats_checks.py` | India audit + the statistics that decide feasibility |
-| `data/india/` | downloaded Indian datasets (git-ignored; see `scripts/fetch_data.sh --india`) |
-
-Headline: monsoon region explains η² = 0.875 of Jun-Sep rainfall variance
-(vs η² = 0.254 for Spotify genre), 16/36 subdivision trends shrink to 9/36 after
-Benjamini–Hochberg correction, and the 1-in-20-year deficit ranges from 47.6 %
-of normal (West Rajasthan) to 77.8 % (Kerala).
-
-## Start here
-
-| file | what it is |
-|---|---|
-| `research/feasibility_report.md` | the main report (datasets, RQs, methods, plan, recommendation) |
-| `research/dataset_audit.md` | measured schema/quality findings for every downloaded dataset |
-| `research/eda.py` | reproducible initial EDA → `research/figures/*.png` |
-| `research/figures/` | the six Review-1 figures (real plots, real data) |
-| `research/_audit_raw.txt`, `research/_feasibility_raw.txt` | raw script output |
+| `research/project_definition.md` | monsoon project definition — RQs, methods, rubric, plan, Review-1 answers |
+| `research/dataset_audit.md` | measured schema, coverage and data-quality findings |
+| `research/make_figures.py` | reproducible Review-1 figures → `research/figures/*.png` |
+| `research/figures/` | seven real Review-1 figures (real data, generated locally) |
+| `research/logs/audit_raw.txt`, `research/logs/stats_raw.txt` | raw script output |
 | `scripts/audit_datasets.py` | schema / missingness / duplicate / summary report |
-| `scripts/feasibility_checks.py` | distribution fits, t-tests, ANOVA, χ², regression |
-| `scripts/fetch_data.sh` | re-download the data (no credentials needed; `--india` for the monsoon sets) |
-| `research/project_direction_comparison.md` | direction reassessment vs five India-focused alternatives |
+| `scripts/feasibility_checks.py` | distribution fits, power, multiple testing, trends, return periods |
+| `scripts/fetch_data.sh` | re-download the data (no credentials needed) |
 
 ## Reproduce everything
 
 ```bash
 python -m venv .venv && . .venv/bin/activate   # or: uv venv .venv
 pip install -r requirements.txt
-bash scripts/fetch_data.sh                     # add --with-fma for the optional FMA set
-python scripts/audit_datasets.py   | tee research/_audit_raw.txt
-python scripts/feasibility_checks.py | tee research/_feasibility_raw.txt
-python research/eda.py
+bash scripts/fetch_data.sh                       # downloads to data/raw/
+python scripts/audit_datasets.py   | tee research/logs/audit_raw.txt
+python scripts/feasibility_checks.py | tee research/logs/stats_raw.txt
+python research/make_figures.py
 ```
 
 ## Data
 
 Downloaded and audited (see `research/dataset_audit.md`):
 
-- **Kaggle Spotify Tracks Dataset** — 114,000 tracks × 20 columns, 114 genres
-  (1,000 each), target `popularity` (0–100, 14.1 % zeros).
-- **TidyTuesday Spotify Songs (2020-01-21)** — 32,833 tracks × 23 columns,
-  6 genres / 24 subgenres, target `track_popularity`, plus release dates.
-- *(optional)* **FMA metadata** — 106,574 tracks with count-based play counts.
+- **IMD subdivision rainfall 1901–2015** — 4,116 rows × 19 columns, 36 meteorological
+  subdivisions × 115 years, monthly + seasonal + annual totals, mm
+  SHA-256: `fdc0b7fd8fccea2aab3910014ca7cacdd2f9faee511adda22b43cf30b680b4ec`
+
+Optional secondary datasets (not needed for the core project) are in
+`scripts/fetch_data.sh`.
 
 Large data files are git-ignored; re-fetch them with `scripts/fetch_data.sh`.
 
-## Headline measured findings
+## Headline measured findings (all reproducible)
 
-- No audio feature correlates with popularity above |r| = 0.10 (114k) / 0.15 (TidyTuesday).
-- Multiple regression on audio features: held-out R² = 0.022 (114k), 0.071 (TidyTuesday).
-- Genre is the strongest real signal: one-way ANOVA F = 343.5, η² = 0.254 (114 genres).
-- Explicit vs clean: +3.5 popularity points, Cohen's d = 0.158 (significant but small).
-- 21.3 % (114k) / 13.6 % (TidyTuesday) of rows are duplicate tracks — independence is violated.
+| Question | Answer |
+|---|---|
+| How seasonal is Indian rainfall? | **75.2%** falls in Jun–Sep; monthly mean 19 mm (Jan) → 347 mm (Jul) |
+| Do regions differ? | Yes — one-way ANOVA **F = 811.5, η² = 0.875**, Levene p ≈ 0 |
+| Which regions are least reliable? | **Saurashtra & Kutch CV 40.8%**, West Rajasthan 37.2 %, Arunachal 31.6 %; least variable Assam & Meghalaya 12.0 % |
+| Has monsoon changed? | 16/36 subdivision trends look significant — **only 9/36 survive** Benjamini–Hochberg at 5 % FDR |
+| Is a single distribution enough? | No — December has **21.5% exact-zero** months with positive-part skew 4.73 |
+| Extreme deficit | 1-in-20-year annual deficit = **47.6%** of normal in West Rajasthan vs **77.8%** in Kerala |
+| Centennial trend detectability | median detectable slope ≈ **18% over the century** at 80 % power |
+
+**What this means for the assignment:** the same syllabus (t-tests, F-tests,
+ANOVA, distribution fitting, Pearson/Spearman, CIs, diagnostics) produces
+*strong* effect sizes on rainfall — not the near-zero signal of a music-popularity
+regression. Every figure above is generated locally from the downloaded CSV;
+none are scraped or borrowed.
+
+## Where the Spotify work went
+
+This repo previously held a Spotify music-popularity baseline ("SONIQ").
+It has been archived on the `soniq-spotify-archive` branch so `main` is
+monsoon-only. If you ever need it:
+
+```bash
+git switch soniq-spotify-archive
+git switch main
+```

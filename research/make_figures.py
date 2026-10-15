@@ -2,11 +2,11 @@
 """
 SONIQ — Review 1 figures for the India monsoon direction.
 
-Produces research/figures_india/*.png. Every figure is drawn from the audited
-datasets in data/india/; no synthetic data.
+Produces research/figures/*.png. Every figure is drawn from the audited
+datasets in data/raw/; no synthetic data.
 
 Run:
-    .venv/bin/python research/india_figures.py
+    .venv/bin/python research/make_figures.py
 """
 
 from __future__ import annotations
@@ -23,8 +23,8 @@ import pandas as pd
 from scipy import stats
 
 ROOT = Path(__file__).resolve().parent.parent
-IND = ROOT / "data" / "india"
-OUT = ROOT / "research" / "figures_india"
+IND = ROOT / "data" / "raw"
+OUT = ROOT / "research" / "figures"
 OUT.mkdir(parents=True, exist_ok=True)
 MONTHS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]
 
@@ -120,7 +120,7 @@ def main() -> None:
     import sys
 
     sys.path.insert(0, str(ROOT))
-    from scripts.india_stats_checks import bh  # single source of truth
+    from scripts.feasibility_checks import bh  # single source of truth
     tr["q"] = bh(tr.p)
     tr = tr.sort_values("sen")
     cols = ["#b23a48" if q < 0.05 else "#9aa5b1" for q in tr.q]
