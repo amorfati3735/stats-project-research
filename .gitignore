@@ -1,0 +1,17 @@
+# data — large and re-fetchable; never commit these (see scripts/fetch_data.sh)
+data/raw/*
+data/india/*
+data/processed/*
+!data/raw/.gitkeep
+!data/india/.gitkeep
+
+# python
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# os / editor
+.DS_Store
+Thumbs.db
+*.swp

@@ -1,0 +1,194 @@
+
+==============================================================================
+[1] Trend tests per division: OLS vs Mann-Kendall vs Sen, with BH correction
+==============================================================================
+divisions tested: 36
+  OLS  p<0.05 uncorrected : 16   surviving BH(FDR 5%):  9
+  Mann-Kendall p<0.05     : 15   (agrees with OLS on sign: 36/36)
+  sign agreement OLS vs Sen: 36/36
+
+strongest negative and positive Sen slopes:
+                          division   n  sen_slope   p_mk  q_ols
+                 ARUNACHAL PRADESH  95   -17.3939 0.0000 0.0000
+            NAGA MANI MIZO TRIPURA 115    -3.2200 0.0000 0.0016
+                            KERALA 115    -2.2237 0.0284 0.1008
+SUB HIMALAYAN WEST BENGAL & SIKKIM 115    -1.7322 0.0411 0.2279
+                division   n  sen_slope   p_mk  q_ols
+SOUTH INTERIOR KARNATAKA 115     1.3692 0.0002 0.0024
+    GANGETIC WEST BENGAL 115     1.3776 0.0103 0.0343
+            KONKAN & GOA 115     2.9098 0.0270 0.0504
+       COASTAL KARNATAKA 115     2.9267 0.0154 0.0441
+
+example of where multiplicity matters (uncorrected-significant only):
+           division  p_ols  q_ols
+              BIHAR 0.0175 0.0526
+       CHHATTISGARH 0.0311 0.0800
+EAST MADHYA PRADESH 0.0159 0.0519
+             KERALA 0.0437 0.1008
+       KONKAN & GOA 0.0140 0.0504
+ SAURASHTRA & KUTCH 0.0448 0.1008
+        UTTARAKHAND 0.0248 0.0686
+
+==============================================================================
+[2] Power: what trend could 115 years actually detect?
+==============================================================================
+median detectable slope (80% power, 5% two-sided): 1.42 mm/yr
+as % of that division's mean JJAS:
+  median = 0.16% of the mean per year,
+  i.e. ~18% over the whole century.
+  divisions where only trends >2%/yr are detectable: 0/36
+
+==============================================================================
+[3] Distribution selection on ANNUAL rainfall (which model wins outdoors?)
+==============================================================================
+              division   n best_by_AIC  best_KS_D  normal_KS_D
+        WEST RAJASTHAN 115       gamma     0.0666       0.0908
+    SAURASHTRA & KUTCH 115 weibull_min     0.0484       0.0788
+                KERALA 115   lognormal     0.0436       0.0436
+            TAMIL NADU 115 weibull_min     0.0886       0.0890
+     ASSAM & MEGHALAYA 115      normal     0.0444       0.0444
+COASTAL ANDHRA PRADESH 115   lognormal     0.0564       0.0718
+
+full table for WEST RAJASTHAN (a classic low-rainfall, skewed division):
+      model  KS_D  KS_p      AIC      BIC
+     normal 0.091 0.282 1408.029 1413.519
+      gamma 0.067 0.663 1400.044 1408.279
+weibull_min 0.081 0.419 1407.841 1416.076
+  lognormal 0.091 0.278 1405.353 1413.588
+  mean=292.7 sd=108.8 skew=0.94
+
+==============================================================================
+[4] Zero-inflation: monthly rainfall is a mixture, not a plain distribution
+==============================================================================
+share of exactly 0 mm by month (%):
+JAN    14.8
+FEB    15.7
+MAR    11.0
+APR     5.3
+MAY     2.0
+JUN     0.0
+JUL     0.0
+AUG     0.0
+SEP     0.0
+OCT     2.1
+NOV    15.8
+DEC    21.5
+
+DEC: n=4106  P(0)=0.215  |  positive part: n=3222 mean=24.0 skew=4.73 gamma fit shape=0.05
+-> a Bernoulli(p0) x Gamma model is the natural fit; a single Normal is not.
+   counter-example JUL: P(0)=0.000 (effectively no zeros)
+
+==============================================================================
+[5] Spatial dependence: are the 36 divisions independent?
+==============================================================================
+pairwise Pearson r of annual JJAS across divisions: n_pairs=630
+  mean=0.196  median=0.196  share r>0: 78.6%  max=0.812  min=-0.363
+-> there IS a shared all-India monsoon component (79% of pairs positive, and
+   neighbouring divisions reach r~0.8), but the average pair only correlates
+   at r~0.2: the divisions are neither independent nor interchangeable.
+   Both the multiplicity problem (36 tests) and this dependence are real,
+   examinable parts of the project.
+
+example: correlation of JJAS vs total ANNUAL rainfall per division (top 5):
+DIVISION
+GUJARAT REGION        0.987
+WEST RAJASTHAN        0.977
+SAURASHTRA & KUTCH    0.977
+EAST RAJASTHAN        0.977
+KONKAN & GOA          0.971
+overall mean r(JJAS, ANNUAL) = 0.871
+
+==============================================================================
+[6] Bootstrap vs textbook t-interval (non-normal data)
+==============================================================================
+WEST RAJASTHAN       skew=+0.94  mean=  292.7  t-CI=(272.6,312.8)  boot-CI=(273.0,313.4)  width diff=+0.7%
+KERALA               skew=+0.49  mean= 2925.5  t-CI=(2847.5,3003.5)  boot-CI=(2850.9,3003.7)  width diff=-2.0%
+TAMIL NADU           skew=-0.73  mean=  943.7  t-CI=(913.0,974.4)  boot-CI=(912.5,973.3)  width diff=-0.8%
+-> the CLT already holds at n~110, so the two agree closely: a genuine,
+   checkable result rather than an assumption. Small subsamples (e.g. per decade)
+   are where the bootstrap starts to pay off.
+
+==============================================================================
+[7] Drought probability and return periods (Gamma fit to annual totals)
+==============================================================================
+                  division   mean  observed_min  q05_1in20yr  q02_1in50yr  q20_pct_of_mean  q50_pct_of_mean  gamma_shape  KS_D
+            WEST RAJASTHAN  292.7          62.3        139.4        114.4             47.6             39.1          7.2   0.1
+        SAURASHTRA & KUTCH  495.2          92.7        207.3        163.8             41.9             33.1          5.6   0.0
+            GUJARAT REGION  918.2         392.6        505.1        431.6             55.0             47.0         10.4   0.1
+                TAMIL NADU  943.7         318.0        664.5        607.3             70.4             64.3         26.7   0.1
+                    PUNJAB  593.5         274.7        359.7        315.7             60.6             53.2         14.1   0.0
+HARYANA DELHI & CHANDIGARH  530.5         234.7        321.3        282.0             60.6             53.2         14.1   0.0
+                    KERALA 2925.5        2068.8       2275.6       2134.8             77.8             73.0         49.3   0.0
+
+1-in-20-year drought = rainfall below the q05 value above;
+the project can report this per division and map the risk.
+note: gamma_shape is large everywhere (annual totals are only mildly skewed
+      once summed over a season and a whole division), so the Gamma and Normal
+      fits are close at this aggregation level; the divergence shows up in the
+      MONTHLY series, where shapes drop to ~0.05-10 and zero-inflation appears.
+
+==============================================================================
+[8] Seasonality: monthly rainfall ~ month (ANOVA) and month share
+==============================================================================
+F=3051.7 p=0 eta^2=0.4050  (n=49,322)
+mean mm by month:
+month
+JAN     19.0
+FEB     21.8
+MAR     27.4
+APR     43.1
+MAY     85.7
+JUN    230.2
+JUL    347.2
+AUG    290.3
+SEP    197.4
+OCT     95.5
+NOV     39.9
+DEC     18.9
+share of annual rainfall in JUN-SEP: 75.2%
+
+==============================================================================
+[9] Normality of annual totals (Shapiro / skew) per division
+==============================================================================
+divisions rejecting normality at 5%: 12/36
+median skew: 0.31 (all positive: False)
+              division   n  skewness  shapiro_W     p
+        WEST RAJASTHAN 115     0.938      0.957 0.001
+                PUNJAB 115     0.926      0.952 0.000
+     COASTAL KARNATAKA 114     0.842      0.958 0.001
+COASTAL ANDHRA PRADESH 115     0.758      0.962 0.002
+       JAMMU & KASHMIR 114     0.645      0.955 0.001
+
+skewness vs the division's mean annual rainfall: Pearson r=-0.026 (p=0.881), Spearman rho=-0.222 (p=0.194)
+-> HONEST NEGATIVE RESULT: annual totals are right-skewed in most divisions
+   (median skew +0.31, 12/36 reject normality) but the degree of skew is NOT
+   explained by how wet the division is. Worth stating in the report as a
+   tested-and-rejected hypothesis instead of being quietly dropped.
+   (Aggregation pulls the figure towards normality: the per-division median
+   skew is 0.31 for ANNUAL and for Jun-Sep, but 1.40 for the pooled monthly
+   series, reaching 4.3 in January and 5.2 in December -- a clean CLT demo.)
+
+==============================================================================
+[10] All-India monsoon index and drought frequency (one computed number)
+==============================================================================
+all-India Jun-Sep index: n=115 years, normal=1064.7 mm, sd=97.2
+years below 90% of normal: 23/115 (20.0%)
+years below 75% of normal: 0/115
+
+driest 6 seasons (% departure from normal):
+YEAR
+1972   -22.8
+2002   -21.3
+1905   -17.4
+2009   -17.0
+1979   -16.3
+1918   -15.9
+
+wettest 3 seasons:
+YEAR
+1959    17.4
+1961    18.3
+1988    18.9
+
+-> the index reproduces the historically documented drought seasons
+   (1972, 2002, 1905, 2009, 1918, 1965) directly from the file.

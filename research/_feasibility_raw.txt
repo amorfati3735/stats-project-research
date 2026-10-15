@@ -1,0 +1,162 @@
+
+==============================================================================
+[1] POPULARITY DISTRIBUTION — Kaggle 114k
+==============================================================================
+n=114,000 mean=33.239 sd=22.305 min=0 max=100
+skew=0.046 kurtosis=-0.928 zeros=14.1%
+quantiles: 0.01=0.0 0.05=0.0 0.25=17.0 0.5=35.0 0.75=50.0 0.95=69.0 0.99=80.0
+
+fitted distributions (KS test vs fit; smaller D = better fit):
+  normal         params=[33.239 22.305]  D=0.0877 p=0
+  gamma          params=[1432.112 -810.730 0.589]  D=0.0889 p=0
+  weibull_min    params=[2.072 -10.840 49.726]  D=0.1097 p=0
+  beta(scaled): fit failed (Invalid values in `data`.  Maximum likelihood estimation with 'beta' requires that 0 < (x - loc)/scale  < 1 for each x in `data`.)
+
+==============================================================================
+[1] POPULARITY DISTRIBUTION — TidyTuesday
+==============================================================================
+n=32,833 mean=42.477 sd=24.984 min=0 max=100
+skew=-0.233 kurtosis=-0.933 zeros=8.2%
+quantiles: 0.01=0.0 0.05=0.0 0.25=24.0 0.5=45.0 0.75=62.0 0.95=79.0 0.99=89.0
+
+fitted distributions (KS test vs fit; smaller D = better fit):
+  normal         params=[42.477 24.984]  D=0.0700 p=3.82e-140
+  gamma          params=[383.842 -450.396 1.284]  D=0.0713 p=1.39e-145
+  weibull_min    params=[4.290 -49.335 101.175]  D=0.0700 p=2.93e-140
+  beta(scaled): fit failed (Invalid values in `data`.  Maximum likelihood estimation with 'beta' requires that 0 < (x - loc)/scale  < 1 for each x in `data`.)
+
+==============================================================================
+[2] ONE-WAY ANOVA: popularity ~ track_genre — Kaggle 114k (114 genres)
+==============================================================================
+k=114 groups; n per group: min=1000 max=1000 median=1000
+F=343.46  p=0  eta^2=0.2542  (Levene W=256.8 p=0)
+highest-mean groups: pop-film=59.3, k-pop=56.9, chill=53.7, sad=52.4, grunge=49.6
+lowest-mean groups: chicago-house=12.3, detroit-techno=11.2, latin=8.3, romance=3.2, iranian=2.2
+
+==============================================================================
+[2] ONE-WAY ANOVA: track_popularity ~ playlist_genre — TidyTuesday (6 genres)
+==============================================================================
+k=6 groups; n per group: min=4951 max=6043 median=5469
+F=207.21  p=2.7e-218  eta^2=0.0306  (Levene W=44.5 p=6.92e-46)
+highest-mean groups: pop=47.7, latin=47.0, rap=43.2, rock=41.7, r&b=41.2
+lowest-mean groups: latin=47.0, rap=43.2, rock=41.7, r&b=41.2, edm=34.8
+
+==============================================================================
+[3] WELCH t-TEST: popularity by explicit — Kaggle 114k
+==============================================================================
+n(explicit)=9,747 mean=36.45 | n(clean)=104,253 mean=32.94
+diff=3.516  95% CI=[3.015, 4.017]  t=13.76  p=1.04e-42  Cohen's d=0.158
+
+==============================================================================
+[4] CHI-SQUARE INDEPENDENCE: explicit x track_genre — Kaggle 114k
+==============================================================================
+table (2, 114)  chi2=18460.2  dof=113  p=0  n=114,000  Cramer's V=0.402
+min expected count=85.50
+
+==============================================================================
+[4] CHI-SQUARE INDEPENDENCE: playlist_genre x playlist_subgenre — TidyTuesday
+==============================================================================
+table (6, 24)  chi2=164165.0  dof=115  p=0  n=32,833  Cramer's V=1.000
+min expected count=143.10
+
+==============================================================================
+[5] PEARSON vs SPEARMAN vs POPULARITY — Kaggle 114k
+==============================================================================
+         feature  pearson_r  p_pearson  spearman_rho  p_spearman
+    danceability    0.03545  4.963e-33       0.02663   2.421e-19
+          energy   0.001056     0.7214      -0.02351   2.022e-15
+             key  -0.003853     0.1933      -0.00259      0.3818
+        loudness    0.05042  4.485e-65       0.03518   1.484e-32
+            mode   -0.01393  2.554e-06       -0.0145   9.758e-07
+     speechiness   -0.04493  5.065e-52      -0.06787  1.751e-116
+    acousticness   -0.02547  7.849e-18      0.008399     0.00457
+instrumentalness   -0.09514 2.048e-227      -0.07845   4.42e-155
+        liveness  -0.005387    0.06893     -0.008189    0.005693
+         valence   -0.04053  1.142e-42       -0.0419   1.772e-45
+           tempo     0.0132  8.252e-06       0.01709   7.975e-09
+     duration_ms  -0.007101     0.0165       0.02823    1.54e-21
+
+==============================================================================
+[5] PEARSON vs SPEARMAN vs POPULARITY — TidyTuesday
+==============================================================================
+         feature  pearson_r  p_pearson  spearman_rho  p_spearman
+    danceability    0.06475  7.575e-32       0.06525    2.56e-32
+          energy    -0.1091  1.662e-87       -0.1185  5.772e-103
+             key -0.0006504     0.9062     -0.001367      0.8044
+        loudness    0.05769  1.303e-25       0.06537   1.977e-32
+            mode    0.01064    0.05394       0.01261     0.02235
+     speechiness   0.006819     0.2166      0.006659      0.2276
+    acousticness    0.08516  6.636e-54        0.1288  2.085e-121
+instrumentalness    -0.1499 3.223e-164       -0.1932  1.465e-273
+        liveness   -0.05458  4.262e-23      -0.02992    5.86e-08
+         valence    0.03323  1.713e-09       0.03722   1.517e-11
+           tempo  -0.005378     0.3298      -0.02232   5.234e-05
+     duration_ms    -0.1437 5.841e-151       -0.1207  7.325e-107
+
+==============================================================================
+[6] MULTIPLE REGRESSION — Kaggle 114k, audio features only
+==============================================================================
+predictors=13  n=114,000  cond(design)=3.42e+06
+train R2=0.0251   test R2=0.0223   (gap=0.0028)   OLS full R2=0.0246 adj=0.0244
+largest |std. coef|: instrumentalness=-2.481, valence=-2.413, speechiness=-1.634, danceability=+1.469, explicit=+0.989, energy=-0.671
+
+==============================================================================
+[6] MULTIPLE REGRESSION — Kaggle 114k, audio + genre dummies
+==============================================================================
+predictors=126  n=114,000  cond(design)=2.92e+07
+train R2=0.2595   test R2=0.2587   (gap=0.0008)   OLS full R2=0.2597 adj=0.2588
+largest |std. coef|: track_genre_iranian=-3.653, track_genre_romance=-3.580, track_genre_latin=-3.211, track_genre_detroit-techno=-2.914, track_genre_chicago-house=-2.813, track_genre_jazz=-2.598
+
+==============================================================================
+[6] MULTIPLE REGRESSION — TidyTuesday, audio features only
+==============================================================================
+predictors=12  n=32,833  cond(design)=3.58e+06
+train R2=0.0725   test R2=0.0707   (gap=0.0018)   OLS full R2=0.0722 adj=0.0719
+largest |std. coef|: energy=-5.340, loudness=+4.556, duration_ms=-2.747, instrumentalness=-2.686, speechiness=-0.735, danceability=+0.732
+
+==============================================================================
+[6] MULTIPLE REGRESSION — TidyTuesday, audio + genre dummies
+==============================================================================
+predictors=17  n=32,833  cond(design)=3.74e+06
+train R2=0.0912   test R2=0.0877   (gap=0.0035)   OLS full R2=0.0906 adj=0.0901
+largest |std. coef|: energy=-5.317, loudness=+4.858, playlist_genre_pop=+3.615, playlist_genre_rock=+3.357, playlist_genre_latin=+2.994, duration_ms=-2.733
+
+==============================================================================
+[7] DUPLICATE-TRACK SENSITIVITY
+==============================================================================
+Kaggle 114k: 114,000 rows -> 89,741 unique track_id (21.3% removed)
+   r(instrumentalness, popularity): all=-0.0951  dedup=-0.1275
+   r(duration_ms, popularity): all=-0.0071  dedup=-0.0231
+   r(energy, popularity): all=+0.0011  dedup=+0.0137
+   tracks/artist: mean=3.63 max=279
+TidyTuesday: 32,833 rows -> 28,356 unique track_id (13.6% removed)
+   r(instrumentalness, track_popularity): all=-0.1499  dedup=-0.1244
+   r(duration_ms, track_popularity): all=-0.1437  dedup=-0.1397
+   r(energy, track_popularity): all=-0.1091  dedup=-0.1036
+   tracks/artist: mean=3.07 max=161
+
+==============================================================================
+[8] TEMPORAL INFORMATION
+==============================================================================
+TidyTuesday release years: 1957–2020; n=32,833
+tracks per decade:
+year
+1950        3
+1960      172
+1970      966
+1980     1306
+1990     2310
+2000     4077
+2010    23214
+2020      785
+         size       mean
+decade                  
+1960      172  49.319767
+1970      966  46.665631
+1980     1306  44.584227
+1990     2310  39.957576
+2000     4077  33.639441
+2010    23214  43.801413
+2020      785  46.461146
+corr(release year, popularity) r=0.061 p=3.18e-28
+Kaggle 114k temporal columns: none (no release date / year field)

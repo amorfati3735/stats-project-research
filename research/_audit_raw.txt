@@ -1,0 +1,291 @@
+
+==============================================================================
+FILE: kaggle_spotify_tracks_114k.csv
+==============================================================================
+shape: 114,000 rows x 20 cols
+memory: 51.2 MB
+
+==============================================================================
+kaggle_spotify_tracks_114k.csv :: SCHEMA
+==============================================================================
+track_id                str
+artists                 str
+album_name              str
+track_name              str
+popularity            int64
+duration_ms           int64
+explicit               bool
+danceability        float64
+energy              float64
+key                   int64
+loudness            float64
+mode                  int64
+speechiness         float64
+acousticness        float64
+instrumentalness    float64
+liveness            float64
+valence             float64
+tempo               float64
+time_signature        int64
+track_genre             str
+
+==============================================================================
+kaggle_spotify_tracks_114k.csv :: HEAD
+==============================================================================
+                 track_id                 artists        album_name        track_name  popularity  duration_ms  explicit  danceability  energy  key  loudness  mode  speechiness  acousticness  instrumentalness  liveness  valence   tempo  time_signature track_genre
+0  5SuOikwiRyPMVoIQDJUgSV             Gen Hoshino            Comedy            Comedy          73       230666     False         0.676   0.461    1    -6.746     0       0.1430        0.0322          0.000001     0.358    0.715  87.917               4    acoustic
+1  4qPNDBW1i3p13qLCt0Ki3A            Ben Woodward  Ghost (Acoustic)  Ghost - Acoustic          55       149610     False         0.420   0.166    1   -17.235     1       0.0763        0.9240          0.000006     0.101    0.267  77.489               4    acoustic
+2  1iJBSr7s7jYXzM8EGcbK5b  Ingrid Michaelson;ZAYN    To Begin Again    To Begin Again          57       210826     False         0.438   0.359    0    -9.734     1       0.0557        0.2100          0.000000     0.117    0.120  76.332               4    acoustic
+
+==============================================================================
+kaggle_spotify_tracks_114k.csv :: MISSING VALUES
+==============================================================================
+            n_missing       pct
+artists             1  0.000877
+album_name          1  0.000877
+track_name          1  0.000877
+
+==============================================================================
+kaggle_spotify_tracks_114k.csv :: DUPLICATES
+==============================================================================
+exact duplicate rows: 450
+duplicate track_id: 24,259 (89,741 unique)
+duplicate track_name: 40,391 (73,608 unique)
+unique artists: 31,437
+
+==============================================================================
+kaggle_spotify_tracks_114k.csv :: NUMERIC SUMMARY
+==============================================================================
+                     count           mean            std     min           25%            50%          75%          max
+popularity        114000.0      33.238535      22.305078   0.000      17.00000      35.000000      50.0000      100.000
+duration_ms       114000.0  228029.153114  107297.712645   0.000  174066.00000  212906.000000  261506.0000  5237295.000
+danceability      114000.0       0.566800       0.173542   0.000       0.45600       0.580000       0.6950        0.985
+energy            114000.0       0.641383       0.251529   0.000       0.47200       0.685000       0.8540        1.000
+key               114000.0       5.309140       3.559987   0.000       2.00000       5.000000       8.0000       11.000
+loudness          114000.0      -8.258960       5.029337 -49.531     -10.01300      -7.004000      -5.0030        4.532
+mode              114000.0       0.637553       0.480709   0.000       0.00000       1.000000       1.0000        1.000
+speechiness       114000.0       0.084652       0.105732   0.000       0.03590       0.048900       0.0845        0.965
+acousticness      114000.0       0.314910       0.332523   0.000       0.01690       0.169000       0.5980        0.996
+instrumentalness  114000.0       0.156050       0.309555   0.000       0.00000       0.000042       0.0490        1.000
+liveness          114000.0       0.213553       0.190378   0.000       0.09800       0.132000       0.2730        1.000
+valence           114000.0       0.474068       0.259261   0.000       0.26000       0.464000       0.6830        0.995
+tempo             114000.0     122.147837      29.978197   0.000      99.21875     122.017000     140.0710      243.372
+time_signature    114000.0       3.904035       0.432621   0.000       4.00000       4.000000       4.0000        5.000
+
+==============================================================================
+kaggle_spotify_tracks_114k.csv :: CATEGORICAL CARDINALITY
+==============================================================================
+track_id: 89,741 unique (high)
+artists: 31,437 unique (high)
+album_name: 46,589 unique (high)
+track_name: 73,608 unique (high)
+track_genre: 114 unique
+
+==============================================================================
+kaggle_spotify_tracks_114k.csv :: TARGET 'popularity' DISTRIBUTION
+==============================================================================
+count    114000.000000
+mean         33.238535
+std          22.305078
+min           0.000000
+25%          17.000000
+50%          35.000000
+75%          50.000000
+max         100.000000
+skew: 0.046  kurtosis: -0.928
+zeros: 16,020 (14.1%)
+value counts (top 15):
+popularity
+0     16020
+1      2140
+20     2110
+21     2344
+22     2354
+23     2117
+38     1891
+39     1863
+40     1913
+41     1996
+42     1871
+43     2073
+44     2288
+45     2004
+46     1906
+
+==============================================================================
+kaggle_spotify_tracks_114k.csv :: CORRELATION WITH TARGET / TOP FEATURES
+==============================================================================
+instrumentalness   -0.095139
+loudness            0.050423
+speechiness        -0.044927
+valence            -0.040534
+danceability        0.035448
+time_signature      0.031073
+acousticness       -0.025472
+mode               -0.013931
+tempo               0.013205
+duration_ms        -0.007101
+liveness           -0.005387
+key                -0.003853
+energy              0.001056
+
+==============================================================================
+kaggle_spotify_tracks_114k.csv :: GENRE BALANCE
+==============================================================================
+114 genres; per-genre: min=1000 max=1000 median=1000.0
+
+==============================================================================
+FILE: tidytuesday_spotify_songs.csv
+==============================================================================
+shape: 32,833 rows x 23 cols
+memory: 25.3 MB
+
+==============================================================================
+tidytuesday_spotify_songs.csv :: SCHEMA
+==============================================================================
+track_id                        str
+track_name                      str
+track_artist                    str
+track_popularity              int64
+track_album_id                  str
+track_album_name                str
+track_album_release_date        str
+playlist_name                   str
+playlist_id                     str
+playlist_genre                  str
+playlist_subgenre               str
+danceability                float64
+energy                      float64
+key                           int64
+loudness                    float64
+mode                          int64
+speechiness                 float64
+acousticness                float64
+instrumentalness            float64
+liveness                    float64
+valence                     float64
+tempo                       float64
+duration_ms                   int64
+
+==============================================================================
+tidytuesday_spotify_songs.csv :: HEAD
+==============================================================================
+                 track_id                                             track_name  track_artist  track_popularity          track_album_id                                       track_album_name track_album_release_date playlist_name             playlist_id playlist_genre playlist_subgenre  danceability  energy  key  loudness  mode  speechiness  acousticness  instrumentalness  liveness  valence    tempo  duration_ms
+0  6f807x0ima9a1j3VPbc7VN  I Don't Care (with Justin Bieber) - Loud Luxury Remix    Ed Sheeran                66  2oCs0DGTsRO98Gh5ZSl2Cx  I Don't Care (with Justin Bieber) [Loud Luxury Remix]               2019-06-14     Pop Remix  37i9dQZF1DXcZDD7cfEKhW            pop         dance pop         0.748   0.916    6    -2.634     1       0.0583        0.1020          0.000000    0.0653    0.518  122.036       194754
+1  0r7CVbZTWZgbTCYdfa2P31                        Memories - Dillon Francis Remix      Maroon 5                67  63rPSO264uRjW1X5E6cWv6                        Memories (Dillon Francis Remix)               2019-12-13     Pop Remix  37i9dQZF1DXcZDD7cfEKhW            pop         dance pop         0.726   0.815   11    -4.969     1       0.0373        0.0724          0.004210    0.3570    0.693   99.972       162600
+2  1z1Hg7Vb0AhHDiEmnDE79l                        All the Time - Don Diablo Remix  Zara Larsson                70  1HoSmj2eLcsrR0vE9gThr4                        All the Time (Don Diablo Remix)               2019-07-05     Pop Remix  37i9dQZF1DXcZDD7cfEKhW            pop         dance pop         0.675   0.931    1    -3.432     0       0.0742        0.0794          0.000023    0.1100    0.613  124.008       176616
+
+==============================================================================
+tidytuesday_spotify_songs.csv :: MISSING VALUES
+==============================================================================
+                  n_missing       pct
+track_name                5  0.015229
+track_artist              5  0.015229
+track_album_name          5  0.015229
+
+==============================================================================
+tidytuesday_spotify_songs.csv :: DUPLICATES
+==============================================================================
+exact duplicate rows: 0
+duplicate track_id: 4,477 (28,356 unique)
+duplicate track_name: 9,383 (23,449 unique)
+unique track_artist: 10,692
+
+==============================================================================
+tidytuesday_spotify_songs.csv :: NUMERIC SUMMARY
+==============================================================================
+                    count           mean           std          min          25%            50%           75%         max
+track_popularity  32833.0      42.477081     24.984074     0.000000      24.0000      45.000000      62.00000     100.000
+danceability      32833.0       0.654850      0.145085     0.000000       0.5630       0.672000       0.76100       0.983
+energy            32833.0       0.698619      0.180910     0.000175       0.5810       0.721000       0.84000       1.000
+key               32833.0       5.374471      3.611657     0.000000       2.0000       6.000000       9.00000      11.000
+loudness          32833.0      -6.719499      2.988436   -46.448000      -8.1710      -6.166000      -4.64500       1.275
+mode              32833.0       0.565711      0.495671     0.000000       0.0000       1.000000       1.00000       1.000
+speechiness       32833.0       0.107068      0.101314     0.000000       0.0410       0.062500       0.13200       0.918
+acousticness      32833.0       0.175334      0.219633     0.000000       0.0151       0.080400       0.25500       0.994
+instrumentalness  32833.0       0.084747      0.224230     0.000000       0.0000       0.000016       0.00483       0.994
+liveness          32833.0       0.190176      0.154317     0.000000       0.0927       0.127000       0.24800       0.996
+valence           32833.0       0.510561      0.233146     0.000000       0.3310       0.512000       0.69300       0.991
+tempo             32833.0     120.881132     26.903624     0.000000      99.9600     121.984000     133.91800     239.440
+duration_ms       32833.0  225799.811622  59834.006182  4000.000000  187819.0000  216000.000000  253585.00000  517810.000
+
+==============================================================================
+tidytuesday_spotify_songs.csv :: CATEGORICAL CARDINALITY
+==============================================================================
+track_id: 28,356 unique (high)
+track_name: 23,449 unique (high)
+track_artist: 10,692 unique (high)
+track_album_id: 22,545 unique (high)
+track_album_name: 19,743 unique (high)
+track_album_release_date: 4,530 unique (high)
+playlist_name: 449 unique (high)
+playlist_id: 471 unique (high)
+playlist_genre: 6 unique
+playlist_subgenre: 24 unique
+
+==============================================================================
+tidytuesday_spotify_songs.csv :: TARGET 'track_popularity' DISTRIBUTION
+==============================================================================
+count    32833.000000
+mean        42.477081
+std         24.984074
+min          0.000000
+25%         24.000000
+50%         45.000000
+75%         62.000000
+max        100.000000
+skew: -0.233  kurtosis: -0.933
+zeros: 2,703 (8.2%)
+value counts (top 15):
+track_popularity
+0     2703
+1      575
+45     505
+47     496
+49     497
+50     498
+51     514
+52     506
+54     514
+55     492
+56     497
+57     541
+58     503
+60     514
+61     492
+
+==============================================================================
+tidytuesday_spotify_songs.csv :: CORRELATION WITH TARGET / TOP FEATURES
+==============================================================================
+instrumentalness   -0.149872
+duration_ms        -0.143682
+energy             -0.109112
+acousticness        0.085159
+danceability        0.064748
+loudness            0.057687
+liveness           -0.054584
+valence             0.033231
+mode                0.010637
+speechiness         0.006819
+tempo              -0.005378
+key                -0.000650
+
+==============================================================================
+tidytuesday_spotify_songs.csv :: playlist_genre BALANCE
+==============================================================================
+playlist_genre
+edm      6043
+rap      5746
+pop      5507
+r&b      5431
+latin    5155
+rock     4951
+
+subgenres: 24
+
+==============================================================================
+SUMMARY
+==============================================================================
+                          file   rows  cols
+kaggle_spotify_tracks_114k.csv 114000    20
+ tidytuesday_spotify_songs.csv  32833    23
